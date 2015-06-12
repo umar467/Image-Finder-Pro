@@ -15,7 +15,7 @@ public class page extends JComponent {
 
 	private ArrayList<Image> stack;
 	int x, y = 0;
-	private ArrayList<Image> col;
+	public ArrayList<Image> col;
 	int screenWidth = 1024;
 	int screenHeight = 800;
 	int focused = -100;
@@ -115,8 +115,10 @@ public class page extends JComponent {
 //				Graphics g2 = newImage.getGraphics();
 //				g2.drawImage(tim, 0, 0, null);
 //				g2.dispose();
-				fx = fx-tim.getWidth(null)/2;
-				fy = fy-tim.getHeight(null)/2;
+				//fx = fx-300;//tim.getWidth(null)/2;
+				//appfy = fy-300;//tim.getHeight(null)/2;
+				System.out.println("fx="+fx+"  fy="+fy+" imageWIdth="+tim.getWidth(null)+" imge Height = "+tim.getHeight(null));
+			
 				
 				g.drawImage(tim, fx, fy, this);System.out.println("focusss called ddone!!!!!!!!!!!");isfocused = false;}
 	

@@ -1,5 +1,11 @@
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -8,15 +14,18 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
-public class Scroller extends MouseInputAdapter {
+public class Scroller extends MouseInputAdapter implements ClipboardOwner {
 	page a;
 	ImageGrabber ig;
 	public void mouseEntered(MouseEvent event) {
-		 //JOptionPane.showMessageDialog(null, "Mouse entered!");
+		  //JOptionPane.showMessageDialog(null, "Mouse entered!");
 		 
 	 }
 	 	public void mouseClicked(MouseEvent event){
+	 		int r = event.getY() / 110;
+			int c = event.getX() / 110;
 	 		System.out.println("mouse clicked !!!!!!!!!!!!!!!!!!!!!!!!!");
+	 		CopyImage(a.col.get(r * 10 + c));
 	 	}
 	 	public void mouseExited(MouseEvent event){
 	 		a.endfocus();
@@ -26,16 +35,16 @@ public class Scroller extends MouseInputAdapter {
 		System.out.println("("+event.getX()+","+event.getY()+")");
 		 if (event.getX()<1080 && event.getY()<1024) {
 				// text.setText("("+event.getX()+","+event.getY()+")");
-				// JOptionPane.showMessageDialog(null,
+				// JO ptionPane.showMessageDialog(null,
 				// "Mouse moved to ("+event.getX()+","+event.getY()+")");
 				int r = event.getY() / 110;
 				int c = event.getX() / 110;
-				System.out
+				 System.out
 						.println("   ==r=" + r + "==c=" + c + "==   " + r + c);
 				// text.setIcon(new ImageIcon(ig.get(r+c)));
 				System.out.println(" calling focus");
 				a.focus(r * 10 + c, event.getX(), event.getY());
-			}else{a.endfocus();}
+			}else{a.endfocus();} 
 			
 		}
 	public Scroller() throws HeadlessException {
@@ -72,4 +81,23 @@ public class Scroller extends MouseInputAdapter {
 		Scroller p = new Scroller();
 
 	}
+	@Override
+	public void lostOwnership(Clipboard clipboard, Transferable contents) {
+		// TODO Auto-generated method stub
+		
+	}
+	 public void CopyImage(Image bi)
+	    {
+	        try
+	        {
+	            TransferableImage trans = new TransferableImage( bi );
+	            Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+	            c.setContents( trans, this );
+	        }
+	        catch ( Exception x ) {
+	            x.printStackTrace();
+	            System.exit( 1 );
+	        }
 }
+}
+
